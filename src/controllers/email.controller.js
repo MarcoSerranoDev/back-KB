@@ -1,8 +1,11 @@
 const nodemailer = require("nodemailer");
+const Register = require("../models/register");
 
 const sendEmail = async (req, res, next) => {
   const { name, email } = req.body;
   try {
+    const newRegister = new Register(req.body);
+    await newRegister.save();
     contentHTML = `
     <div>
         <h2>Hello ${name}</h2>
@@ -26,7 +29,8 @@ const sendEmail = async (req, res, next) => {
     let info = await transporter.sendMail({
       from: '"KBoard Music" <info@kboardmusic.com>', // sender address,
       to: `${email}`,
-      subject: "Download slyles KBOARD",
+      cc: "info@kboardmusic.com",
+      subject: "Download styles KBOARD",
       html: contentHTML,
     });
     res.status(200).json(`E-mail send with de id: ${info.messageId}`);
@@ -36,7 +40,7 @@ const sendEmail = async (req, res, next) => {
 };
 
 const sentMeMail = async (req, res, next) => {
-  const { name, email, message, phone} = req.body;
+  const { name, email, message, phone } = req.body;
   try {
     contentHTML = `
     <div>
@@ -70,6 +74,6 @@ const sentMeMail = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 module.exports = { sendEmail, sentMeMail };
