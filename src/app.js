@@ -2,20 +2,20 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 // const path = require("path");
-
+const corsOptions = require("./config/corsOptions");
 const emailRoutes = require("./routes/email.router");
 const productsRoutes = require("./routes/products.router");
 
 //Initialization
 const app = express();
-require("./database")
+require("./database");
 
 //Settings
 app.set("port", process.env.PORT || 4000);
 
 //Miiddlewares
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
