@@ -20,6 +20,9 @@ const Product = new Schema({
   mainImage: String,
   rutas: [String],
   imgExpla: [String],
+  downloads: Boolean,
+  sesgoLeft: String,
+  sesgoRight: String,
 });
 
 module.exports = model("Product", Product);
