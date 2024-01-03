@@ -8,17 +8,18 @@ const Product = new Schema({
   badge: String,
   new: Boolean,
   usLang: {
-      description:String,
-      description_small: String,
-      features: [String]
-  },
-  esLang:{
-    description:String,
+    description: String,
     description_small: String,
-    features: [String]
+    features: [String],
   },
-  mainImage:String,
-  rutas:[String]
+  esLang: {
+    description: String,
+    description_small: String,
+    features: [String],
+  },
+  mainImage: String,
+  rutas: [String],
+  imgExpla: [String],
 });
 
 module.exports = model("Product", Product);

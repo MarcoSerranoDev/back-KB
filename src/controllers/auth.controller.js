@@ -21,10 +21,11 @@ const login = async (req, res, next) => {
       const accessToken = jwt.sign(
         {
           email: foundUser.email,
+          username: foundUser.username,
           roles: foundUser.roles,
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1m" }
+        { expiresIn: "10s" }
       );
 
       const refreshToken = jwt.sign(
@@ -40,7 +41,7 @@ const login = async (req, res, next) => {
 
       res.cookie("token", refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "None",
         maxAge: 24 * 60 * 60 * 1000,
       });
@@ -56,7 +57,6 @@ const login = async (req, res, next) => {
 
 const refreshToken = async (req, res, next) => {
   const cookies = req.cookies;
-  console.log(cookies);
   if (!cookies?.token) return res.sendStatus(401);
 
   try {
@@ -73,11 +73,12 @@ const refreshToken = async (req, res, next) => {
 
         const accessToken = jwt.sign(
           {
-            email: decoded.email,
+            email: foundUser.email,
+            username: foundUser.username,
             roles: foundUser.roles,
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "10m" }
+          { expiresIn: "10s" }
         );
 
         res.json({ accessToken });
