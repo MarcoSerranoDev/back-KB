@@ -23,6 +23,7 @@ const Product = new Schema({
   downloads: Boolean,
   sesgoLeft: String,
   sesgoRight: String,
+  cardImg: String,
 });
 
 module.exports = model("Product", Product);
