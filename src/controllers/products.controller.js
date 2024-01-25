@@ -1,7 +1,11 @@
 const Product = require("../models/product");
 
 const createProduct = async (req, res, next) => {
+  const { modelo } = req.body;
   try {
+    const product = await Product.find({ modelo }).exec();
+    if (product.length)
+      return res.status(400).json({ message: "Product already created" });
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.status(201).json({ message: "Product Created" });
